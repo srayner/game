@@ -1,20 +1,20 @@
 function Player() {
     
-    // Blue
-    this.fillStyle = 'rgba(87, 139, 210, 1)';
+    // Red
+    this.fillStyle = 'rgba(139, 37, 37, 1)';
     
-    this.x = Math.floor(Math.random() * (640 - 30));;
-    this.y = Math.floor(Math.random() * (480 - 30));;
+    this.x = 32;
+    this.y = 512 - 64;
     
     this.jumping = false;
     this.falling = false;
-    this.jumpHeight = 90;
+    this.jumpHeight = 96;
     this.height = 0;
 };
 
 Player.prototype.draw = function(context) {
     context.fillStyle = this.fillStyle;
-    context.fillRect(this.x, this.y, 30, 30);
+    context.fillRect(this.x, this.y, 32, 32);
 };
 
 Player.prototype.update = function() {
@@ -56,7 +56,7 @@ Player.prototype.moveLeft = function() {
 };
 
 Player.prototype.moveRight = function() {
-    if (this.x < 610) {
+    if (this.x < (768-32)) {
         this.x += 1;
     }
 };

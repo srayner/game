@@ -1,15 +1,18 @@
 var Game = {};
 
-Game.fps = 240;
+Game.fps = 200;
 
 Game.initialize = function() {
-  this.entities = [];
-  this.context = document.getElementById("viewport").getContext("2d");
+    
+    Game.map = new Map();
+    //while (map.loading) {}; // wait for map to load
+    this.entities = [];
+    this.context = document.getElementById("viewport").getContext("2d");
 };
 
+
 Game.draw = function() {
-  this.context.clearRect(0, 0, 640, 480);
-  
+  this.map.draw(this.context);
   for (var i=0; i < this.entities.length; i++) {
     this.entities[i].draw(this.context);
   }
