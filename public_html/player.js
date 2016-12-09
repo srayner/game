@@ -3,8 +3,8 @@ function Player() {
     // Red
     this.fillStyle = 'rgba(139, 37, 37, 1)';
     
-    this.x = 32;
-    this.y = 512 - 64;
+    this.x = 32 * 2;
+    this.y = 32 * 1;
     
     this.jumping = false;
     this.falling = false;
@@ -24,45 +24,55 @@ Player.prototype.update = function() {
     if (Key.isDown(Key.RIGHT)) this.moveRight();
   
     // Jump.
-    if (Key.isDown(Key.UP) && !this.jumping && !this.falling) this.jump();
+    if (Key.isDown(Key.UP) && !this.jumping && this.onSurface()) {
+        this.jump();
+    }
     
     // Jumping.
     if (this.jumping) {        
         if (this.height < this.jumpHeight) {
-            this.height +=1;
-            this.y -=1;
+            if (this.mapCollision(this.x, this.y-1)) {
+                this.jumping = false;
+            } else {
+                this.height +=1;
+                this.y -=1;
+            }
         } else {
-            this.falling = true;
             this.jumping = false;
         }
     }
-    
-    // Falling.
-    if (this.falling) {        
-        if (this.height > 0) {
-            this.height -=1;
-            this.y +=1;
-        } else {
-            this.falling = false;
-        }
+
+    // Fall.
+    if (!this.jumping && !this.onSurface()) {
+        this.y +=1;
     }
-    
 };
 
 Player.prototype.moveLeft = function() {
-    if (this.x > 0) {
-      this.x -= 1;
+    if ((this.x > 0) && !this.mapCollision(this.x-1, this.y)) {
+        this.x -= 1;
     }
 };
 
 Player.prototype.moveRight = function() {
-    if (this.x < (768-32)) {
+    if ((this.x < (768-32)) && !this.mapCollision(this.x+1, this.y)) {
         this.x += 1;
     }
 };
 
 Player.prototype.jump = function() {
+    this.height = 0;
     this.jumping = true;
+};
+
+Player.prototype.mapCollision = function(x,y)
+{
+    var collision = this.map.collision(x+16, y+16);
+    return (collision > 0);
+};
+
+Player.prototype.onSurface = function() {
+    return this.mapCollision(this.x, this.y+1);  
 };
 
 var Key = {

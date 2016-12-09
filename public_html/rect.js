@@ -1,10 +1,10 @@
-function Rect() {
+function Rect(x,y) {
     
     // Grey
     this.fillStyle = 'rgba(121, 121, 121, 1)';
     
-    this.x = Math.floor(Math.random() * (768 - 32));;
-    this.y = Math.floor(Math.random() * (512 - 32));;
+    this.x = x;
+    this.y = y;
     this.velocity = Math.random() > 0.5 ? -1 : 1;
 };
 

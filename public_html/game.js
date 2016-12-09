@@ -1,12 +1,20 @@
 var Game = {};
 
-Game.fps = 200;
+Game.fps = 120;
 
 Game.initialize = function() {
     
-    Game.map = new Map();
-    //while (map.loading) {}; // wait for map to load
+    this.map = new Map();
     this.entities = [];
+    
+    // Add some moving rectangles
+    this.addRect(10,2);
+    this.addRect(12,4);
+    this.addRect(6,9);
+      
+    // Add a player
+    this.addPlayer();
+        
     this.context = document.getElementById("viewport").getContext("2d");
 };
 
@@ -24,11 +32,29 @@ Game.update = function() {
   }
 };
 
-Game.addRect = function() {
-  Game.entities.push(new Rect());
+Game.addRect = function(x,y) {
+    this.entities.push(new Rect(x*32,y*32));
 };
 
 Game.addPlayer = function() {
-    Game.player = new Player();
-    Game.entities.push(Game.player);
+    this.player = new Player();
+    this.player.map = this.map;
+    this.entities.push(this.player);
+};
+
+Game.collisionDetect = function(entity) {
+    var collision = false;
+    var dx;
+    var dy;
+    for (var i = 0, len = this.entities.length; i < len; i++) {
+        if (entity !== this.entities[i]) {
+            dx = Math.abs(entity.x - this.entities[i].x);
+            dy = Math.abs(entity.y - this.entities[i].y);
+            if ((dx < 32) || (dy < 32)) {
+                collision = i;
+                break;
+            }
+        }
+    }
+    return collision;
 };
