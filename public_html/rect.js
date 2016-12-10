@@ -1,5 +1,8 @@
 function Rect(x,y) {
     
+    this.img = new Image();
+    this.img.src = 'bat.png';
+    
     // Grey
     this.fillStyle = 'rgba(121, 121, 121, 1)';
     
@@ -9,8 +12,7 @@ function Rect(x,y) {
 };
 
 Rect.prototype.draw = function(context) {
-    context.fillStyle = this.fillStyle;
-    context.fillRect(this.x, this.y, 32, 32);
+    context.drawImage(this.img, this.x, this.y);
 };
 
 Rect.prototype.update = function() {

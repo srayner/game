@@ -1,5 +1,12 @@
 function Player() {
     
+    this.loading = true;
+    this.img = new Image();
+    this.img.onload = function(){
+        this.loading = false;
+    };
+    this.img.src = 'player.png';
+    
     // Red
     this.fillStyle = 'rgba(139, 37, 37, 1)';
     
@@ -13,8 +20,7 @@ function Player() {
 };
 
 Player.prototype.draw = function(context) {
-    context.fillStyle = this.fillStyle;
-    context.fillRect(this.x, this.y, 32, 32);
+    context.drawImage(this.img, this.x, this.y);
 };
 
 Player.prototype.update = function() {
