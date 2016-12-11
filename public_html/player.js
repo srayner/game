@@ -1,22 +1,16 @@
-function Player() {
+function Player(x, y, game) {
     
-    this.loading = true;
     this.img = new Image();
-    this.img.onload = function(){
-        this.loading = false;
-    };
     this.img.src = 'player.png';
     
-    // Red
-    this.fillStyle = 'rgba(139, 37, 37, 1)';
-    
-    this.x = 32 * 2;
-    this.y = 32 * 1;
+    this.x = 32 * x;
+    this.y = 32 * y;
+    this.game = game;
     
     this.jumping = false;
-    this.falling = false;
     this.jumpHeight = 96;
     this.height = 0;
+    this.health = 1000;
 };
 
 Player.prototype.draw = function(context) {
@@ -37,7 +31,7 @@ Player.prototype.update = function() {
     // Jumping.
     if (this.jumping) {        
         if (this.height < this.jumpHeight) {
-            if (this.mapCollision(this.x, this.y-1)) {
+            if (this.collision(this.x, this.y-1)) {
                 this.jumping = false;
             } else {
                 this.height +=1;
@@ -55,37 +49,52 @@ Player.prototype.update = function() {
 };
 
 Player.prototype.moveLeft = function() {
-    if ((this.x > 0) && !this.mapCollision(this.x-1, this.y)) {
+    if ((this.x > 0) && !this.collision(this.x-1, this.y)) {
         this.x -= 1;
+    }
+    if (this.x === (0)) {
+        this.game.moveScreenLeft();
+        this.x = (768-32);
     }
 };
 
 Player.prototype.moveRight = function() {
-    if ((this.x < (768-32)) && !this.mapCollision(this.x+1, this.y)) {
+    if ((this.x < (768-32)) && !this.collision(this.x+1, this.y)) {
         this.x += 1;
+    }
+    if (this.x === (768-32)) {
+        this.game.moveScreenRight();
+        this.x = 0;
     }
 };
 
 Player.prototype.jump = function() {
     this.height = 0;
     this.jumping = true;
-};
-
-Player.prototype.mapCollision = function(x,y)
-{
-    var collision = this.map.collision(x+16, y+16);
-    return (collision > 0);
+    this.game.sound('jump');
 };
 
 Player.prototype.onSurface = function() {
-    return this.mapCollision(this.x, this.y+1);  
+    return this.collision(this.x, this.y+1);  
+};
+
+Player.prototype.collision = function(x,y)
+{
+    var mapCollision = this.game.mapCollision(x+16, y+16);
+    var entityCollision = this.game.entityCollision(this);
+    
+    if (entityCollision) {
+        this.health -=1;
+        document.getElementById('health').innerHTML = 'Health: ' + Math.floor(this.health/10);
+    }
+    return ((mapCollision + entityCollision) > 0);
 };
 
 var Key = {
   _pressed: {},
 
   LEFT: 37,
-  UP: 38,
+  UP: 32,
   RIGHT: 39,
   DOWN: 40,
   

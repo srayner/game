@@ -3,14 +3,20 @@
   <head>
     <title>Game</title>
     <link rel="stylesheet" href="style.css" type="text/css" charset="utf-8" />
+    <script type="text/javascript" charset="utf-8" src="map-data.js"></script>
     <script type="text/javascript" charset="utf-8" src="map.js"></script>
-    <script type="text/javascript" charset="utf-8" src="rect.js"></script>
+    <script type="text/javascript" charset="utf-8" src="creature.js"></script>
+    <script type="text/javascript" charset="utf-8" src="bat.js"></script>
+    <script type="text/javascript" charset="utf-8" src="snake.js"></script>
+    <script type="text/javascript" charset="utf-8" src="ralph.js"></script>
+    <script type="text/javascript" charset="utf-8" src="wasp.js"></script>
     <script type="text/javascript" charset="utf-8" src="player.js"></script>
     <script type="text/javascript" charset="utf-8" src="game.js"></script>
   </head>
   <body>
     <canvas id="viewport" height="512" width="768"></canvas>
-
+    <div id="health">Health: 100</div>
+    <audio id="soundEfx" src="jump.wav" style="display: none;"></audio>
     <script type="text/javascript">
 
         Game.initialize();
