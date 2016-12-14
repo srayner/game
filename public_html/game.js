@@ -18,8 +18,8 @@ Game.initialize = function() {
     this.addWasp(1, 3, 3);
     this.addWasp(2, 2, 5);
     this.addWasp(3, 3, 3);
-    this.addWasp(4, 10, 5);
-    this.addWasp(5, 10, 5);
+    this.addWasp(4, 10, 8);
+    this.addWasp(5, 12, 11);
     this.addWasp(6, 10, 5);
     this.addSnake(6, 12, 14);
     this.addWasp(7, 10, 5);
