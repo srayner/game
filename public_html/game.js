@@ -32,6 +32,9 @@ Game.initialize = function() {
     this.addWasp(10, 9, 3);
     this.addRalph(10, 10, 7);
       
+    this.addGold(10, 22, 3);
+      
+      
     // Add a player
     this.addPlayer();
         
@@ -70,6 +73,10 @@ Game.addWasp = function(screen, x, y) {
 
 Game.addRalph = function(screen, x, y) {
     this.entities.push(new Ralph(x, y, screen, this));
+};
+
+Game.addGold = function(screen, x, y) {
+    this.entities.push(new Gold(x, y, screen, this));
 };
 
 Game.addPlayer = function() {
